@@ -36,7 +36,7 @@ def get_opt():
     parser.add_argument('--test_name', type=str, default='test', help='test name')
     parser.add_argument("--dataroot", default="./data/zalando-hd-resize")
     parser.add_argument("--datamode", default="test")
-    parser.add_argument("--data_list", default="./data/zalando-hd-resize/test_pairs.txt")
+    parser.add_argument("--data_list", default="test_pairs.txt")
     parser.add_argument("--output_dir", type=str)
     parser.add_argument("--datasetting", default="paired")
     parser.add_argument("--fine_width", type=int, default=768)
@@ -44,8 +44,8 @@ def get_opt():
 
     parser.add_argument('--tensorboard_dir', type=str, default='tensorboard', help='save tensorboard infos')
     parser.add_argument('--checkpoint_dir', type=str, default='checkpoints', help='save checkpoint infos')
-    parser.add_argument('--tocg_checkpoint', type=str, default='', help='tocg checkpoint')
-    parser.add_argument('--gen_checkpoint', type=str, default='./gen_step_110000.pth', help='G checkpoint')  
+    parser.add_argument('--tocg_checkpoint', type=str, default='./eval_models/weights/v0.1/tocg.pth', help='tocg checkpoint')
+    parser.add_argument('--gen_checkpoint', type=str, default='./eval_models/weights/v0.1/toig.pth', help='G checkpoint')  
 
     parser.add_argument("--tensorboard_count", type=int, default=100)
     parser.add_argument("--shuffle", action='store_true', help='shuffle input data')
@@ -123,7 +123,7 @@ def test(opt, test_loader, board, tocg, generator):
             densepose = inputs['densepose'].cuda()
             im = inputs['image']
             input_label, input_parse_agnostic = label.cuda(), parse_agnostic.cuda()
-            pre_clothes_mask = torch.FloatTensor((pre_clothes_mask.detach().cpu().numpy() > 0.5).astype(np.float)).cuda()
+            pre_clothes_mask = torch.FloatTensor((pre_clothes_mask.detach().cpu().numpy() > 0.5).astype(float)).cuda()
 
             # down
             pose_map_down = F.interpolate(pose_map, size=(opt.cond_G_input_height, opt.cond_G_input_width), mode='bilinear')
@@ -144,7 +144,7 @@ def test(opt, test_loader, board, tocg, generator):
             flow_list_taco, fake_segmap, _, warped_clothmask_taco, flow_list_tvob, _, _, = tocg(input1, input2)
             
             # warped cloth mask one hot 
-            warped_cm_onehot = torch.FloatTensor((warped_clothmask_taco.detach().cpu().numpy() > 0.5).astype(np.float)).cuda()
+            warped_cm_onehot = torch.FloatTensor((warped_clothmask_taco.detach().cpu().numpy() > 0.5).astype(float)).cuda()
             
             cloth_mask = torch.ones_like(fake_segmap)
             cloth_mask[:,3:4, :, :] = warped_clothmask_taco
