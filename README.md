@@ -1,20 +1,4 @@
-# SD-VITON-Virtual-Try-On
-This is the official repository for the following paper:
-> **Towards Squeezing-Averse Virtual Try-On via Sequential Deformation** [[arxiv]](https://arxiv.org/pdf/2312.15861.pdf)
->
-> Sang-Heon Shim, Jiwoo Chung, Jae-Pil Heo  
-> Accepted by **AAAI 2024**.
-
-![teaser](assets/teaser.png)&nbsp;
-
-## Notice
-This repository is currently built only for sharing the source code of an academic research paper.  
-It has several limitations. Please check out them at below.
-
-## News
-- *2024-01-31* We have released the source codes and checkpoints.
-
-
+# BTP 
 ## Installation
 
 Clone this repository:
@@ -99,20 +83,3 @@ Thereby, it remains in the generated samples.
 
 A solution would be to mask out such regions when pre-processing the inputs.  
 We did not apply such additional technique, since it was not included in a dataset.
-
-## Acknowledgments
-
-This repository is built based on HR-VITON repository. Thanks for the great work.
-
-## Citation
-
-If you find this work useful for your research, please cite our paper:
-
-```
-@article{shim2023towards,
-  title={Towards Squeezing-Averse Virtual Try-On via Sequential Deformation},
-  author={Shim, Sang-Heon and Chung, Jiwoo and Heo, Jae-Pil},
-  journal={arXiv preprint arXiv:2312.15861},
-  year={2023}
-}
-```
